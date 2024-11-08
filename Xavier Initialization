@@ -1,0 +1,24 @@
+xaviermodel = Sequential([
+    Flatten(input_shape=(32, 32, 3)),
+    Dense(256, activation='relu',kernel_initializer='glorot_uniform'),  # Hidden Layer 1
+    Dense(128, activation='relu',kernel_initializer='glorot_uniform'),  # Hidden Layer 2
+    Dense(64, activation='relu',kernel_initializer='glorot_uniform'),   # Hidden Layer 3
+    Dense(10, activation='softmax') # Output Layer
+])
+
+# Compile the model
+xaviermodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+st=time.time()
+
+# Train the model
+history = xaviermodel.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_test, y_test))
+et=time.time()
+
+# Evaluate the model
+xaviertest_loss, xaviertest_acc = xaviermodel.evaluate(x_test, y_test)
+
+duration=et-st
+
+print(f"Duration:{duration:.4f}")
+print(f"Test accuracy: {xaviertest_acc:.4f}")
+print(f"Test loss: {xaviertest_loss:.4f}")
